@@ -1,0 +1,29 @@
+.filter-select {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.75rem;
+}
+
+.filter-select__label {
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.filter-select select {
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #0f172a;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.filter-select select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}

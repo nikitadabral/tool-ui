@@ -1,0 +1,31 @@
+.form-title {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #0f172a;
+}
+
+.form-subtitle {
+  margin: 4px 0 24px;
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.request-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.request-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+.form-error-banner {
+  margin-bottom: 20px;
+}

@@ -1,0 +1,2 @@
+/* Layout primitives moved to src/styles/layout.css and shared across screens. */
+@import '../../styles/layout.css';

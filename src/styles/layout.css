@@ -1,0 +1,129 @@
+/* Shared page/layout primitives used by requester and reviewer screens. */
+.page {
+  min-height: 100svh;
+  width: 100%;
+  background: #f8fafc;
+  box-sizing: border-box;
+}
+
+.page__topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px clamp(16px, 4vw, 40px);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: saturate(180%) blur(8px);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.page__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.page__brand::before {
+  content: '';
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #6366f1, #2563eb);
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35);
+  flex-shrink: 0;
+}
+
+.page__topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.page__user {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+@media (max-width: 480px) {
+  .page__user {
+    display: none;
+  }
+}
+
+.page__body {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 40px) clamp(16px, 4vw, 40px) 64px;
+  box-sizing: border-box;
+}
+
+/* Keep single-column forms/detail cards readable on very wide screens. */
+.request-form,
+.details-card {
+  width: 100%;
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.welcome__title {
+  margin: 0;
+  font-size: clamp(1.35rem, 3vw, 1.6rem);
+  color: #0f172a;
+}
+
+.welcome__subtitle {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.requests__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.requests__title {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #0f172a;
+}
+
+.requests__count {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.request-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 560px) {
+  .welcome {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .page__topbar {
+    padding: 12px 16px;
+  }
+}

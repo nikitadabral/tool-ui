@@ -1,0 +1,52 @@
+.status-editor {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-editor__current {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+}
+
+.status-editor__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+}
+
+.status-editor--active {
+  gap: 10px;
+}
+
+.status-editor__select {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #0f172a;
+  background: #ffffff;
+  min-width: 160px;
+}
+
+.status-editor__select:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.status-editor__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.status-editor__error {
+  flex-basis: 100%;
+  font-size: 0.8rem;
+  color: #dc2626;
+}

@@ -1,0 +1,152 @@
+@import '../../styles/layout.css';
+
+.detail-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.detail-heading__title {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #0f172a;
+}
+
+.detail-heading__eyebrow {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6366f1;
+  margin-bottom: 4px;
+}
+
+.detail-heading__id {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.detail-heading__badges {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.detail-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.detail-card__title {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #0f172a;
+}
+
+.detail-card__titlerow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.detail-readonly-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #64748b;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  margin: 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.detail-meta dt {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #94a3b8;
+  margin-bottom: 2px;
+}
+
+.detail-meta dd {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.detail-block h3 {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #64748b;
+}
+
+.detail-block p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.detail-block ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.detail-original {
+  white-space: pre-wrap;
+}
+
+.triage-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.detail-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.triage-feedback {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.triage-feedback--ok {
+  color: #047857;
+}
+
+.triage-feedback--error {
+  color: #dc2626;
+}
+
+@media (max-width: 560px) {
+  .triage-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,26 @@
+@import '../../styles/layout.css';
+
+.triage-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+@media (max-width: 560px) {
+  .triage-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.request-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
