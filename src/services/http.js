@@ -38,9 +38,12 @@ function extractErrorMessage(data, status) {
 /**
  * Perform a JSON request against the API.
  * @param {string} path e.g. '/api/auth/login'
- * @param {{ method?: string, body?: unknown, auth?: boolean, headers?: object }} [options]
+ * @param {{ method?: string, body?: unknown, auth?: boolean, headers?: object, responseType?: 'json'|'blob' }} [options]
  */
-export async function apiFetch(path, { method = 'GET', body, auth = true, headers = {} } = {}) {
+export async function apiFetch(
+  path,
+  { method = 'GET', body, auth = true, headers = {}, responseType = 'json' } = {},
+) {
   const finalHeaders = { Accept: 'application/json', ...headers }
   if (body !== undefined) {
     finalHeaders['Content-Type'] = 'application/json'
@@ -58,6 +61,24 @@ export async function apiFetch(path, { method = 'GET', body, auth = true, header
 
   if (res.status === 204) return null
 
+  if (!res.ok) {
+    const text = await res.text()
+    let data = text
+    if (text) {
+      try {
+        data = JSON.parse(text)
+      } catch {
+        data = text
+      }
+    }
+    if (res.status === 401) clearToken()
+    const error = new Error(extractErrorMessage(data, res.status))
+    error.status = res.status
+    throw error
+  }
+
+  if (responseType === 'blob') return res.blob()
+
   const text = await res.text()
   let data = null
   if (text) {
@@ -67,13 +88,5 @@ export async function apiFetch(path, { method = 'GET', body, auth = true, header
       data = text
     }
   }
-
-  if (!res.ok) {
-    if (res.status === 401) clearToken()
-    const error = new Error(extractErrorMessage(data, res.status))
-    error.status = res.status
-    throw error
-  }
-
   return data
 }

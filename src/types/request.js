@@ -47,7 +47,22 @@
  * @property {string} priority
  * @property {string} owner
  * @property {string} notes
- * @property {AiBrief} aiBrief
+ * @property {string} briefGenerationStatus
+ * @property {string|null} briefGenerationError
+ * @property {AiBrief|null} aiBrief
+ */
+
+/**
+ * An immutable reviewer action associated with a request.
+ * @typedef {Object} AuditEvent
+ * @property {number} id
+ * @property {string} timestamp
+ * @property {string} eventType
+ * @property {string|null} previousStatus
+ * @property {string|null} newStatus
+ * @property {string|null} note
+ * @property {number|null} reviewerId
+ * @property {string|null} reviewerName
  */
 
 /**

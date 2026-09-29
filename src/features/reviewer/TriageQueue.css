@@ -12,6 +12,15 @@
   border-radius: 12px;
 }
 
+.export-feedback {
+  margin: -8px 0 16px;
+  font-size: 0.875rem;
+}
+
+.export-feedback--error {
+  color: #b91c1c;
+}
+
 @media (max-width: 560px) {
   .triage-toolbar {
     flex-direction: column;
@@ -23,4 +32,26 @@
   text-decoration: none;
   color: inherit;
   display: block;
+}
+
+.triage-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.triage-card-footer .status-editor {
+  flex: 1;
+}
+
+.triage-brief-link {
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  .triage-card-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
 }

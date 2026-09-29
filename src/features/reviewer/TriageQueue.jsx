@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { useAllRequests } from '../../hooks/useAllRequests'
+import { exportRequestsCsv } from '../../services/requestService'
 import { PRIORITY_LABEL, STATUS_LABEL, RequestStatus } from '../../constants/requests'
 import { reviewerRequestDetailPath } from '../../app/routes'
 import Button from '../../components/Button'
@@ -33,6 +35,28 @@ export default function TriageQueue() {
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState(ALL)
   const [priorityFilter, setPriorityFilter] = useState(ALL)
+  const [exporting, setExporting] = useState(false)
+  const [exportError, setExportError] = useState(null)
+
+  async function handleExport() {
+    setExporting(true)
+    setExportError(null)
+    try {
+      const csv = await exportRequestsCsv()
+      const downloadUrl = URL.createObjectURL(csv)
+      const link = document.createElement('a')
+      link.href = downloadUrl
+      link.download = 'requests_export.csv'
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      URL.revokeObjectURL(downloadUrl)
+    } catch (err) {
+      setExportError(err instanceof Error ? err.message : 'Failed to export requests.')
+    } finally {
+      setExporting(false)
+    }
+  }
 
   const filtered = useMemo(() => {
     const term = search.trim().toLowerCase()
@@ -87,7 +111,17 @@ export default function TriageQueue() {
             key={request.id}
             request={request}
             titleTo={reviewerRequestDetailPath(request.id)}
-            footer={<StatusEditor request={request} onUpdated={refetch} />}
+            footer={
+              <div className="triage-card-footer">
+                <StatusEditor request={request} onUpdated={refetch} />
+                <Link
+                  className="btn btn--secondary triage-brief-link"
+                  to={`${reviewerRequestDetailPath(request.id)}#ai-brief`}
+                >
+                  View AI brief
+                </Link>
+              </div>
+            }
           />
         ))}
       </div>
@@ -112,7 +146,16 @@ export default function TriageQueue() {
             <h1 className="welcome__title">Triage Queue</h1>
             <p className="welcome__subtitle">Review and prioritize all submitted requests.</p>
           </div>
+          <Button onClick={handleExport} disabled={exporting}>
+            {exporting ? 'Exporting…' : 'Export CSV'}
+          </Button>
         </section>
+
+        {exportError && (
+          <p className="export-feedback export-feedback--error" role="alert">
+            {exportError}
+          </p>
+        )}
 
         {!loading && !error && data.length > 0 && <StatSummary items={summaryItems} />}
 

@@ -74,6 +74,17 @@ export async function getAllRequests() {
 }
 
 /**
+ * Export all reviewer-visible requests as a CSV file.
+ * @returns {Promise<Blob>}
+ */
+export async function exportRequestsCsv() {
+  return apiFetch('/api/requests/export/csv', {
+    headers: { Accept: 'text/csv' },
+    responseType: 'blob',
+  })
+}
+
+/**
  * Submit a new business request to the FastAPI backend.
  * The form fields are combined into a single unstructured `request_text`, which
  * is what the backend persists. The returned shape stays UI-friendly.
@@ -108,20 +119,31 @@ function buildRequestText({ title, description }) {
   return parts.join('\n')
 }
 
-// Placeholder AI brief until the backend AI integration lands.
-function placeholderAiBrief() {
+function toAiBrief(brief) {
   return {
-    problemSummary: 'AI brief has not been generated for this request yet.',
-    likelyUsers: [],
-    recommendedSolutionType: 'Pending AI analysis',
-    clarifyingQuestions: [],
-    risks: [],
-    suggestedNextAction: 'Review the original request text and triage manually.',
+    problemSummary: brief.problem_summary,
+    likelyUsers: brief.likely_users,
+    recommendedSolutionType: brief.solution_type,
+    clarifyingQuestions: brief.clarifying_questions,
+    risks: brief.risks,
+    suggestedNextAction: brief.next_action,
   }
 }
 
 /**
- * Fetch a single request with its (placeholder) AI brief and triage state.
+ * Generate and persist a structured AI brief for a request.
+ * @param {string|number} id
+ * @returns {Promise<import('../types/request').AiBrief>}
+ */
+export async function generateRequestBrief(id) {
+  const brief = await apiFetch(`/api/requests/${id}/generate-brief`, {
+    method: 'POST',
+  })
+  return toAiBrief(brief)
+}
+
+/**
+ * Fetch a single request with its triage state and generated AI brief.
  * @param {string|number} id
  * @returns {Promise<import('../types/request').RequestDetail | null>}
  */
@@ -145,8 +167,29 @@ export async function getRequestById(id) {
     priority: row.priority ?? Priority.MEDIUM,
     owner: row.owner ?? '',
     notes: row.notes ?? '',
-    aiBrief: placeholderAiBrief(),
+    briefGenerationStatus: row.brief_generation_status,
+    briefGenerationError: row.brief_generation_error,
+    aiBrief: row.generated_brief ? toAiBrief(row.generated_brief) : null,
   }
+}
+
+/**
+ * Fetch a request's reviewer audit history in chronological order.
+ * @param {string|number} id
+ * @returns {Promise<Array<import('../types/request').AuditEvent>>}
+ */
+export async function getRequestAuditHistory(id) {
+  const rows = await apiFetch(`/api/requests/${id}/audit-history`)
+  return rows.map((row) => ({
+    id: row.id,
+    timestamp: row.timestamp,
+    eventType: row.event_type,
+    previousStatus: row.previous_status,
+    newStatus: row.new_status,
+    note: row.note,
+    reviewerId: row.reviewer_id,
+    reviewerName: row.reviewer_name,
+  }))
 }
 
 /**
